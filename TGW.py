@@ -54,14 +54,29 @@ with c30:
    
     numbers = numbers.upper()
     listStock = numbers.split()
+    
+    for v in listStock:
+        if v not in df.values :
+            st.write("Stock number", v, "not found")
+            st.stop()
+
+
 
     df1 = df.query("StockNum in @listStock")
     df2 = df1.query("Status == 'SOLD'")
     if not df2.empty:
         st.write("This item has been sold")
         st.dataframe(df2)
+        st.stop()
+
+    df3 = df1.query("Status == 'ORDERS ONLY'")
+    if not df3.empty:
+        st.write("This item can only be made to order - please ring up accordingly")
+        st.dataframe(df3)
+        st.stop()
+
     
-    with st.form('Form2'):
+    with st.form('Form2', clear_on_submit = True):
         st.dataframe(df1)
         st.write("Total is " + df1.Price.sum().astype(str))
         df.loc[df['StockNum'].isin(df1['StockNum']), 'Status'] = 'SOLD'
@@ -86,8 +101,10 @@ with c30:
         gd.set_with_dataframe(ws, df)
         st.write("Data has been sent to Google Sheets")
         st.balloons()
+        st.stop()
 
-    #change values in df based on df1
+
+
         
 
 
