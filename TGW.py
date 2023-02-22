@@ -29,7 +29,7 @@ sheet_url = 'https://docs.google.com/spreadsheets/d/1HPyY-IfmrYmFVTvqc26Eejl1X_Z
 
 
 sh = gc.open_by_url(sheet_url)
-ws = sh.worksheet('Sheet1')
+ws = sh.worksheet('Sales')
 df = pd.DataFrame(ws.get_all_records())
 
 df = df.applymap(lambda s: s.upper() if type(s) == str else s)
