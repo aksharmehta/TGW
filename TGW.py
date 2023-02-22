@@ -25,7 +25,7 @@ app = Flask(__name__)             # create an app instance
 app.config.from_object(__name__)
 app.secret_key = b'kc1230'
 gc = gs.service_account(filename='thisgoeswith.json')
-sheet_url = 'https://docs.google.com/spreadsheets/d/1ES2yN1BPFWeVAlDLmJWvf5hXExci55eooWjDgtCYqJo/edit?usp=sharing'
+sheet_url = 'https://docs.google.com/spreadsheets/d/1HPyY-IfmrYmFVTvqc26Eejl1X_ZAwACW573lS94MD2U/edit?usp=sharing'
 
 
 sh = gc.open_by_url(sheet_url)
