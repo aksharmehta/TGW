@@ -46,7 +46,6 @@ st.image(
 st.title("THIS GOES WITH")
 c29, c30, c31 = st.columns([1, 6, 1])
 with c30:
-    with st.form('Form1'):
         st.dataframe(df)
 
 
