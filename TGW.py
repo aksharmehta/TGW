@@ -46,10 +46,7 @@ st.image(
 st.title("THIS GOES WITH")
 c29, c30, c31 = st.columns([1, 6, 1])
 with c30:
-        st.dataframe(df)
-
-
-        
+       st.bar_chart(df['Brand'].value_counts())
 
 
 
