@@ -47,62 +47,7 @@ st.title("THIS GOES WITH")
 c29, c30, c31 = st.columns([1, 6, 1])
 with c30:
     with st.form('Form1'):
-        numbers = st.text_area("Please enter stock numbers:")
-        submitted = st.form_submit_button('Submit')
-        
-
-   
-    numbers = numbers.upper()
-    listStock = numbers.split()
-    
-    for v in listStock:
-        if v not in df.values :
-            st.write("Stock number", v, "not found")
-            st.stop()
-
-
-
-    df1 = df.query("StockNum in @listStock")
-    df2 = df1.query("Status == 'SOLD'")
-    if not df2.empty:
-        st.write("This item has been sold")
-        st.dataframe(df2)
-        st.stop()
-
-    df3 = df1.query("Status == 'ORDERS ONLY'")
-    if not df3.empty:
-        st.write("This item can only be made to order - please ring up accordingly")
-        st.dataframe(df3)
-        st.stop()
-
-    
-    with st.form('Form2', clear_on_submit = True):
-        st.dataframe(df1)
-        st.write("Total is " + df1.Price.sum().astype(str))
-        df.loc[df['StockNum'].isin(df1['StockNum']), 'Status'] = 'SOLD'
-        orderVal = df1.Price.sum().astype(str)      
-        client = st.text_input("Customer Name:")
-        phone = st.text_input("Phone Number:")
-        pay = st.text_input("Payment Method:")
-        orderNum = st.text_input("Order Number:")
-        totalPaid = st.text_input("Total Paid:")
-        okButton = st.form_submit_button('Submit')
-
-    import gspread_dataframe as gd
-    
-    if okButton:   
-        df.loc[df['StockNum'].isin(df1['StockNum']), 'Status'] = 'SOLD'
-        df.loc[df['StockNum'].isin(df1['StockNum']), 'OrderValue'] = orderVal
-        df.loc[df['StockNum'].isin(df1['StockNum']), 'OrderNum'] = orderNum
-        df.loc[df['StockNum'].isin(df1['StockNum']), 'Customer'] = client
-        df.loc[df['StockNum'].isin(df1['StockNum']), 'Phone'] = phone
-        df.loc[df['StockNum'].isin(df1['StockNum']), 'ModeOfPayment'] = pay
-        df.loc[df['StockNum'].isin(df1['StockNum']), 'TotalPaid'] = totalPaid
-        gd.set_with_dataframe(ws, df)
-        st.write("Data has been sent to Google Sheets")
-        st.balloons()
-        st.stop()
-
+        st.dataframe(df)
 
 
         
