@@ -97,6 +97,8 @@ fig_product_sales.update_layout(
 fig_product_sales.update_xaxes(showgrid=False)
 fig_product_sales.update_yaxes(showgrid=False)
 
+
+
 sales_by_hour=df.groupby(by=["Hour"]).sum()[["Total Amount"]]
 
 fig_hourly_sales=px.bar(
@@ -171,15 +173,47 @@ fig_mode.update_yaxes(showgrid=False)
 
 
 
+sales_by_order=(
+  df.groupby(by=["Custom"]).sum()[["Total Amount"]].sort_values(by="Total Amount")
+)
+
+fig_custom = px.bar(
+    sales_by_order,
+    x="Total Amount",
+    y=sales_by_order.index,
+    orientation="h",
+    title="<b>Order / Ready</b>",
+    text = "Total Amount",
+    color_discrete_sequence=["#205295"] * len(sales_by_order),
+    template="plotly_white"
+)
+
+fig_custom.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=(dict(showgrid=False)),
+    yaxis=(dict(showgrid=False))
+)
+
+fig_custom.update_xaxes(showgrid=False)
+fig_custom.update_yaxes(showgrid=False)
+
+
+
 
 # Displaying charts
-left_column,right_column=st.columns(2)
-left_column.plotly_chart(fig_product_sales,use_container_width=True)
-right_column.plotly_chart(fig_hourly_sales,use_container_width=True)
 
-left_column,right_column=st.columns(2)
-left_column.plotly_chart(fig_customer,use_container_width=True)
-right_column.plotly_chart(fig_mode,use_container_width=True)
+st.plotly_chart(fig_product_sales,theme="streamlit",use_container_width=True)
+st.plotly_chart(fig_hourly_sales,use_container_width=True,theme="streamlit")
+
+
+st.plotly_chart(fig_customer,use_container_width=True,theme="streamlit")
+st.plotly_chart(fig_mode,use_container_width=True,theme="streamlit")
+
+#left_column,right_column=st.columns(2)
+st.plotly_chart(fig_custom,use_container_width=True,theme="streamlit")
+#st.plotly_chart(fig_custom, theme="streamlit", use_container_width=True)
+
+#right_column.plotly_chart(fig_mode,use_container_width=True)
 
 
 # HIDE STREAMLIT STYLE
