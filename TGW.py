@@ -35,7 +35,7 @@ df = pd.DataFrame(ws.get_all_records())
 
 df = df.applymap(lambda s: s.upper() if type(s) == str else s)
 df["Hour"]=pd.to_datetime(df["Time Stamp"],format="%d/%m/%Y %H:%M").dt.hour
-print(df)
+
 
 st.set_page_config(page_icon="✂️", page_title="THIS GOES WITH")
 
