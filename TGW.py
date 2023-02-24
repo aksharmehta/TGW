@@ -32,6 +32,7 @@ sheet_url = 'https://docs.google.com/spreadsheets/d/1HPyY-IfmrYmFVTvqc26Eejl1X_Z
 sh = gc.open_by_url(sheet_url)
 ws = sh.worksheet('Sales')
 df = pd.DataFrame(ws.get_all_records())
+df2 = pd.DataFrame(ws.get_all_records())
 
 df = df.applymap(lambda s: s.upper() if type(s) == str else s)
 df["Hour"]=pd.to_datetime(df["Time Stamp"],format="%d/%m/%Y %H:%M").dt.hour
@@ -226,4 +227,15 @@ hide_st_style="""
             """
 
 st.markdown(hide_st_style, unsafe_allow_html=True)
+
+while True:
+    sh1 = gc.open_by_url(sheet_url)
+    ws1 = sh1.worksheet('Sales')
+    df1 = pd.DataFrame(ws1.get_all_records())
+    if(df1.equals(df2)):
+      print(df1.equals(df2))
+      time.sleep(300)
+    else:
+      st.balloons()
+      st.experimental_rerun()
 
